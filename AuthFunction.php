@@ -13,6 +13,8 @@ class SNAuth_AuthFunction {
     private $url="";
     public function oAuthRequest($url, $method = "GET", $parameters = [], $multi = false) {
         switch ($method) {
+            case 'GetWithHeader':
+                return $this->http($url,'GET', NULL, $parameters);
             case 'GET':
                 $url = $url . '?' . http_build_query($parameters);
                 return $this->http($url, 'GET');
