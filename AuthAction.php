@@ -64,7 +64,9 @@ EOT;
             throw new Typecho_Exception(_t('获取access_token失败，请返回重新授权！'));
             exit();
         }
-        $user_str = $this->AuthFunction->oAuthRequest("https://api.github.com/user", "GET", ["access_token" => $access_token]);
+        //$user_str = $this->AuthFunction->oAuthRequest("https://api.github.com/user", "GET", ["access_token" => $access_token]);
+        //200510，https://developer.github.com/changes/2020-02-10-deprecating-auth-through-query-param/
+        $user_str = $this->AuthFunction->oAuthRequest("https://api.github.com/user", "GetWithHeader", ["Authorization:token ".$access_token]);
         $user_json = json_decode($user_str);
         $user = $this->AuthFunction->object2array($user_json);
         if (!key_exists("login", $user)) {
